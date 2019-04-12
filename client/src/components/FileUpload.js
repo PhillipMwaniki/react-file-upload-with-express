@@ -8,6 +8,7 @@ const FileUpload = () => {
     const [filename, setFileName] = useState('Choose File');
     const [uploadedFile, setUploadedFile] = useState({});
     const [message, setMessage] = useState('');
+    const [uploadPercentage, setUploadPercentage] = useState(0);
 
     const onChange = e => {
         setFile(e.target.files[0]);
@@ -23,7 +24,14 @@ const FileUpload = () => {
             const res = await axios.post('http://localhost:5000/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: progressEvent => {
+                    setUploadPercentage(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))
+                    //clear percentage
+                    setTimeout(() => setUploadPercentage(0), 10000);
                 }
+
+                
             });
 
             const { fileName, filePath } = res.data;

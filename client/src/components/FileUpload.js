@@ -5,7 +5,7 @@ const FileUpload = () => {
 
     const [file, setFile] = useState('');
     const [filename, setFileName] = useState('Choose File');
-    const [uploadedFile, setUploadedFile] = useState({};)
+    const [uploadedFile, setUploadedFile] = useState({});
 
     const onChange = e => {
         setFile(e.target.files[0]);
@@ -18,6 +18,7 @@ const FileUpload = () => {
         formData.append('file', file);
 
         try {
+            console.log('here');
             const res = await axios.post('/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'

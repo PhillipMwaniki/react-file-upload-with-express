@@ -1,5 +1,6 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
 
 const app = express();
 
@@ -8,7 +9,7 @@ app.use(cors());
 app.use(fileUpload());
 
 //endpoint
-app.post('upload', (req, res) => {
+app.post('/upload', (req, res) => {
     if (req.files === null) {
         return res.status(400).json({ msg: 'no file upload'});
     }
@@ -20,7 +21,7 @@ app.post('upload', (req, res) => {
             return res.status(500).send(err);
         }
 
-        res.json({ fileName: file.name, filePath: `uploads/${file.name}`});
+        res.json({ fileName: file.name, filePath: `/uploads/${file.name}`});
     })
 })
 
